@@ -7,10 +7,10 @@ from ourtils.general import (
     squish,
     filter_random,
     collapse_multiindex,
-    DataFrameDiffer,
     pathsafenow,
     print_params,
 )
+from ourtils.diffs import DataFrameDiffer
 import pytest
 
 
