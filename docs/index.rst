@@ -48,7 +48,7 @@ Or compare dataframes with the same columns before / after an operation:
 .. ipython:: python
 
    import pandas as pd
-   from ourtils.general import DataFrameDiffer
+   from ourtils.diffs import DataFrameDiffer
    database_before = pd.DataFrame({'a': [1, 2, 3]})
    database_after = pd.DataFrame({'a': [1, 2]})
    diffy = DataFrameDiffer(database_before, database_after, "a")
