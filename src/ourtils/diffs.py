@@ -3,6 +3,27 @@ from typing import Callable
 import pandas as pd
 
 
+def compare_sets(a: set, b: set, report=True) -> tuple:
+    """Returns a tuple of useful differences of a set.
+
+    Example:
+        .. ipython:: python
+
+            a = {1, 2, 3}
+            b = {2, 3, 5}
+            diffs.compare_sets(a, b)
+    """
+    in_both = a.intersection(b)
+    only_a = a.difference(b)
+    only_b = b.difference(a)
+    if report:
+        print(f"Only A: {only_a}")
+        print(f"Only B: {only_b}")
+        print(f"In both: {in_both}")
+
+    return only_a, only_b, in_both
+
+
 class DataFrameDiffer:
     """
     A class to help compare dataframes. Deals with:
@@ -20,7 +41,7 @@ class DataFrameDiffer:
             df2
 
             # Create a DataFrameDiffer object
-            diffy = ut.DataFrameDiffer(df1, df2, "a")
+            diffy = diffs.DataFrameDiffer(df1, df2, "a")
             diffy.print_report()
             diffy.combined
 
