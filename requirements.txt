@@ -16,7 +16,6 @@ mdurl==0.1.2
 more-itertools==10.6.0
 nh3==0.2.20
 numpy==1.24.2
--e git+ssh://git@github.com/ayoskovich/ourtils.git@fd1145904ee0853675467b021eadc3ece106db7c#egg=ourtils
 packaging==24.2
 pandas==2.2.3
 pkginfo==1.12.0
