@@ -55,7 +55,7 @@ class DataFrameDiffer:
 
             # Create a DataFrameDiffer object
             diffy = diffs.DataFrameDiffer(df1, df2, "a")
-            diffy.print_report()
+            print(diffy.create_report())
             diffy.combined
 
     """
@@ -204,7 +204,7 @@ class DataFrameDiffer:
 
     def create_report(self) -> str:
         """
-        Prints out a handy report of the differences.
+        Returns a string report of the differences.
         """
         report = f"""
         {'-' * 15}
