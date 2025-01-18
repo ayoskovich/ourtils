@@ -105,12 +105,12 @@ class DataFrameDiffer:
             that have happened to the row.
             """
             if _merge_indicator == "left_only":
-                return "[-] Dropped"
+                return "deleted"
             elif _merge_indicator == "right_only":
-                return "[+] Added"
+                return "inserted"
             elif diff:
-                return "[~] Changed"
-            return "[ ] Untouched"
+                return "updated"
+            return "same"
 
         self.combined = (
             pd.merge(
@@ -127,10 +127,11 @@ class DataFrameDiffer:
                 )
             )
             .assign(
-                descr=lambda x: x.apply(
+                action=lambda x: x.apply(
                     lambda x: create_message(x["_merge"], x["diff"]), axis=1
                 )
             )
+            .drop(columns=["_merge"])
         )
 
     @property
@@ -157,17 +158,65 @@ class DataFrameDiffer:
     def comparable(self) -> pd.DataFrame:
         return self.combined
 
-    def print_report(self) -> None:
+    @property
+    def changed_data(self) -> pd.DataFrame:
+        return self.combined.loc[lambda x: x["action"] != "same"]
+
+    @property
+    def summary_dict(self) -> dict:
+        return defaultdict(
+            int, self.combined["action"].value_counts(dropna=False).to_dict()
+        )
+
+    def _trim_message(self, message: str) -> str:
+        return "\n".join([x.strip(" ") for x in message.splitlines() if x.strip(" ")])
+
+    @property
+    def n_inserted(self):
+        return self.summary_dict["inserted"]
+
+    @property
+    def n_updated(self):
+        return self.summary_dict["updated"]
+
+    @property
+    def n_deleted(self):
+        return self.summary_dict["deleted"]
+
+    @property
+    def n_same(self):
+        return self.summary_dict["same"]
+
+    @property
+    def summary_msg(self) -> str:
+        return self._trim_message(
+            f"""
+        Inserted: {self.n_inserted}
+        Updated: {self.n_updated}
+        Deleted: {self.n_deleted}
+        Same: {self.n_same}
+        """
+        )
+
+    @property
+    def n_changed_rows(self):
+        return self.n_inserted + self.n_deleted + self.n_updated
+
+    def create_report(self) -> str:
         """
         Prints out a handy report of the differences.
         """
-        print("-" * 15)
-        print("Difference report")
-        print("-" * 15)
-        print("Columns:")
-        print(f"Removed: {self.missing_columns or 'None'}")
-        print(f"Added: {self.new_columns or 'None'}")
-        print(f"Matching: {self.matching_columns or 'None'}")
-        print("-" * 15)
-        print("Rows:")
-        print(self.combined["descr"].value_counts(dropna=False))
+        report = f"""
+        {'-' * 15}
+        ourtils.DifferenceReport
+        {'-' * 15}
+        Column summary:
+        Removed: {self.missing_columns or ''}
+        Added: {self.new_columns or ''}
+        Matching: {self.matching_columns or ''}
+        {'-' * 15}
+        Row summary ({self.n_changed_rows} total changes):
+        {self.summary_msg}
+        """
+        trimmed_report = self._trim_message(report)
+        return trimmed_report

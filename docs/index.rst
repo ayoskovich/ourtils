@@ -1,7 +1,7 @@
 Welcome to ourtils's documentation!
 ======================================
 
-``ourtils`` is a collection of useful code I use that helps when working with data.
+``ourtils`` is a collection of useful code I use that helps when working with data, it's ours!
 
 Quickstart
 ----------

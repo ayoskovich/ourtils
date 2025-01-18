@@ -6,7 +6,7 @@
             "name": "Python Debugger: Module",
             "type": "debugpy",
             "request": "launch",
-            "module": "ourtils.misc"
+            "module": "ourtils.excel"
         }
     ]
 }

@@ -10,36 +10,8 @@ from ourtils.general import (
     pathsafenow,
     print_params,
 )
-from ourtils.diffs import DataFrameDiffer, compare_sets, SetComparison
+
 import pytest
-
-
-@pytest.fixture
-def standard_sets():
-    return {1, 2, 5}, {5, 7, 10}
-
-
-def test_set_diff_values(capsys, standard_sets):
-    diff = compare_sets(*standard_sets, report=False)
-    assert isinstance(diff, SetComparison)
-    assert diff.only_a == {1, 2}
-    assert diff.only_b == {7, 10}
-    assert diff.in_both == {5}
-    print_statement = capsys.readouterr().out
-    assert not print_statement
-
-
-def test_set_diff_prints(capsys, standard_sets):
-    compare_sets(*standard_sets, report=True)
-    print_statement = capsys.readouterr().out
-    assert "Only A: {1, 2}" in print_statement
-    assert "Only B: {10, 7}" in print_statement
-
-
-def test_set_diff_coersion():
-    list_a = ["anthony", "elmo"]
-    list_b = ["elmo"]
-    compare_sets(list_a, list_b)
 
 
 def test_param_print(capsys):
@@ -120,10 +92,6 @@ def test_squish_with_non_splittable_columns():
     pd.testing.assert_frame_equal(actual_output, expected_output)
 
 
-def test_excel_cols():
-    pass
-
-
 def test_collapse_multiindex():
     df_input = (
         pd.DataFrame(columns=["g", "val"], data=[("a", 1), ("a", 3), ("b", 5)])
@@ -152,16 +120,6 @@ def test_multiple_columns_multiindex():
     )
     result = collapse_multiindex(input)
     assert list(result.columns) == ["grp1", "grp2", "a_mean", "a_std", "b_min"]
-
-
-def test_dataframe_differ():
-    df1 = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
-    df2 = pd.DataFrame({"a": [1, 2, 4], "B": [4, 5, 1], "c": [5, 6, 1]})
-    diffy = DataFrameDiffer(df1, df2, "a")
-
-    assert diffy.matching_columns == {"a", "b"}
-    assert diffy.missing_columns == set()
-    assert diffy.new_columns == {"c"}
 
 
 def test_pathsafenow():

@@ -137,27 +137,6 @@ def create_column(
     ).rename(columns={"__newcol": colname})
 
 
-def generate_excel_cols() -> list[str]:
-    """Returns the excel index (AA) columns."""
-    base = [""] + list(ascii_uppercase)
-    rv = []
-    for first_letter in base:
-        for second_letter in ascii_uppercase:
-            rv.append(f"{first_letter}{second_letter}")
-    return rv
-
-
-def convert_excel_to_df_cols(df: pd.DataFrame, excel_colname: str) -> str:
-    """Returns the dataframe column corresponding to the
-    excel_colname
-
-    :param df: The input dataframe
-    :param excel_colname: The Excel column name
-    """
-    excel_cols = generate_excel_cols()
-    return df.columns[excel_cols.index(excel_colname)]
-
-
 def pathsafenow() -> str:
     """Convert the current datetime into a safe string to be used as a directory name, useful
     when stashing data.
