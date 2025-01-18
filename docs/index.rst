@@ -52,8 +52,8 @@ Or compare dataframes with the same columns before / after an operation:
    database_before = pd.DataFrame({'a': [1, 2, 3]})
    database_after = pd.DataFrame({'a': [1, 2]})
    diffy = DataFrameDiffer(database_before, database_after, "a")
-   print(diffy.combined)
-   diffy.print_report()
+   print(diffy.create_report())
+   diffy.combined
 
 Indices and tables
 ==================
