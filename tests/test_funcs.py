@@ -103,7 +103,7 @@ def test_collapse_multiindex():
         .agg({"val": [np.mean, np.std]})
     )
     expected_output = pd.DataFrame(
-        {"g": ["a", "b"], "val_mean": [2, 5], "val_std": [1.414214, np.NaN]}
+        {"g": ["a", "b"], "val_mean": [2, 5], "val_std": [1.414214, np.nan]}
     )
     result = collapse_multiindex(df_input)
     pd.testing.assert_frame_equal(result, expected_output, check_dtype=False)

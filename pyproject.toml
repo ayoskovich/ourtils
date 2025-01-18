@@ -1,34 +1,23 @@
-[build-system]
-requires = [
-    "setuptools>=61.0",
-    "pytest==7.2.2"
-]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "ourtils"
-version = "0.0.1"
+version = "0.1.0"
+description = "Useful code for working with data."
 authors = [
-  { name="Anthony", email="author@example.com" },
+    {name = "Anthony",email = "anthony.yoskovich@gmail.com"}
 ]
-description = "A collection of useful code for working with data."
 readme = "README.md"
-requires-python = ">=3.10"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
+requires-python = ">=3.12"
 dependencies = [
-  "pandas>=1.5.3",
-  "numpy==1.24.2"
+    "pandas (>=2.2.3,<3.0.0)",
+    "pytest (>=8.3.4,<9.0.0)",
+    "pytest-cov (>=6.0.0,<7.0.0)"
 ]
 
-[project.urls]
-"Homepage" = "https://github.com/ayoskovich/ourtils"
-"Bug Tracker" = "https://github.com/ayoskovich/ourtils/issues"
 
-[tool.pytest.ini_options]
-pythonpath = [
-  "."
-]
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+
