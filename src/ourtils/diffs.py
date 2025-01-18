@@ -1,9 +1,17 @@
 from collections import defaultdict
+from dataclasses import dataclass
 from typing import Callable
 import pandas as pd
 
 
-def compare_sets(a: set, b: set, report=True) -> tuple:
+@dataclass
+class SetComparison:
+    only_a: set
+    only_b: set
+    in_both: set
+
+
+def compare_sets(a: set, b: set, report=True) -> SetComparison:
     """Returns a tuple of useful differences of a set.
 
     Example:
@@ -13,6 +21,11 @@ def compare_sets(a: set, b: set, report=True) -> tuple:
             b = {2, 3, 5}
             diffs.compare_sets(a, b)
     """
+    if isinstance(a, list):
+        a = set(a)
+    if isinstance(b, list):
+        b = set(b)
+
     in_both = a.intersection(b)
     only_a = a.difference(b)
     only_b = b.difference(a)
@@ -21,7 +34,7 @@ def compare_sets(a: set, b: set, report=True) -> tuple:
         print(f"Only B: {only_b}")
         print(f"In both: {in_both}")
 
-    return only_a, only_b, in_both
+    return SetComparison(only_a, only_b, in_both)
 
 
 class DataFrameDiffer:

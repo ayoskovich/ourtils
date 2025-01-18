@@ -10,8 +10,36 @@ from ourtils.general import (
     pathsafenow,
     print_params,
 )
-from ourtils.diffs import DataFrameDiffer
+from ourtils.diffs import DataFrameDiffer, compare_sets, SetComparison
 import pytest
+
+
+@pytest.fixture
+def standard_sets():
+    return {1, 2, 5}, {5, 7, 10}
+
+
+def test_set_diff_values(capsys, standard_sets):
+    diff = compare_sets(*standard_sets, report=False)
+    assert isinstance(diff, SetComparison)
+    assert diff.only_a == {1, 2}
+    assert diff.only_b == {7, 10}
+    assert diff.in_both == {5}
+    print_statement = capsys.readouterr().out
+    assert not print_statement
+
+
+def test_set_diff_prints(capsys, standard_sets):
+    compare_sets(*standard_sets, report=True)
+    print_statement = capsys.readouterr().out
+    assert "Only A: {1, 2}" in print_statement
+    assert "Only B: {10, 7}" in print_statement
+
+
+def test_set_diff_coersion():
+    list_a = ["anthony", "elmo"]
+    list_b = ["elmo"]
+    compare_sets(list_a, list_b)
 
 
 def test_param_print(capsys):
