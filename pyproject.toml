@@ -1,6 +1,6 @@
 [project]
 name = "ourtils"
-version = "1.0.1"
+version = "1.0.2"
 description = "Useful code for working with data."
 authors = [
     {name = "Anthony",email = "anthony.yoskovich@gmail.com"}
@@ -19,6 +19,7 @@ dependencies = [
     "pytest-coverage>=0.0",
     "ruff>=0.12.1",
     "black>=25.1.0",
+    "scipy<=1.15.3",
 ]
 
 

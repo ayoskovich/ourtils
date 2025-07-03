@@ -23,7 +23,7 @@ def standardize(numbers: pd.Series) -> pd.Series:
     """Safely standardizes a series."""
     if numbers.dtype == "object":
         return numbers
-    return stats.zscore(numbers)
+    return pd.Series(stats.zscore(numbers))
 
 
 class RegressionResult:
