@@ -25,7 +25,7 @@ extensions = [
     "IPython.sphinxext.ipython_console_highlighting",
 ]
 templates_path = ["_templates"]
-exclude_patterns = []
+exclude_patterns = ["docs_venv"]
 
 # autodoc_mock_imports = ["pandas"]
 

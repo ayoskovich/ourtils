@@ -3,13 +3,10 @@ import pandas as pd
 import numpy as np
 from unittest import mock
 from ourtils.general import (
-    shout,
-    squish,
-    filter_random,
-    collapse_multiindex,
     pathsafenow,
     print_params,
 )
+from ourtils.wrangling import shout, squish, filter_random, collapse_multiindex
 
 import pytest
 
@@ -96,7 +93,7 @@ def test_collapse_multiindex():
     df_input = (
         pd.DataFrame(columns=["g", "val"], data=[("a", 1), ("a", 3), ("b", 5)])
         .groupby("g")
-        .agg({"val": [np.mean, np.std]})
+        .agg({"val": ["mean", "std"]})
     )
     expected_output = pd.DataFrame(
         {"g": ["a", "b"], "val_mean": [2, 5], "val_std": [1.414214, np.nan]}
@@ -116,7 +113,7 @@ def test_multiple_columns_multiindex():
             }
         )
         .groupby(["grp1", "grp2"])
-        .agg({"a": [np.mean, np.std], "b": [min]})
+        .agg({"a": ["mean", "std"], "b": ["min"]})
     )
     result = collapse_multiindex(input)
     assert list(result.columns) == ["grp1", "grp2", "a_mean", "a_std", "b_min"]
