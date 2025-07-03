@@ -4,31 +4,20 @@
 
 A collection of useful code for working with data.
 
-## Install from github
+## Install from pypi
 
 ```
-$ python -m pip install git+https://github.com/ayoskovich/ourtils@main
+$ pip install ourtils
 ```
 
 ## Dev Tips
 
-From the root of this directory, run:
-```
-$ python -m pip install -e .
-```
+This package uses `uv`. To run tests:
 
-Run tests (after activating the virtual environment)
 ```
-$ python -m pytest
-$ pytest -rP
+$ uv sync
+$ uv run pytest
 ```
-
-When you download the package from test pypi, you'll need to install like this:
-```
-python3 -m pip install ourtils==0.1.1 --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
-```
-
-to avoid 
 
 ## Buildings docs locally
 
@@ -38,18 +27,3 @@ Then, create and activate a _new_ virtual environment using `requirements.txt` i
 ```
 $ make clean html
 ```
-
-### Distributing
-
-To create distribution archives
-```
-$ python3 -m pip install --upgrade build
-$ python3 -m build
-```
-
-To upload package to test pypi
-```
-$ python3 -m twine upload -r testpypi dist/*
-```
-
-https://packaging.python.org/en/latest/

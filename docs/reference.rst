@@ -1,16 +1,14 @@
 Reference
 =========
 
-Be sure to import ``pandas`` and ``ourtils``:
+.. toctree::
+   :maxdepth: 2
 
-.. ipython:: python
-
-   import ourtils.general as ut
-   from ourtils import diffs
-   import pandas as pd
-
-.. automodule:: ourtils.general
-   :members:
-
-.. automodule:: ourtils.diffs
-   :members:
+   modules/wrangling
+   modules/diffs
+   modules/visualize
+   modules/excel
+   modules/general
+   modules/managers
+   modules/misc
+   modules/modeling

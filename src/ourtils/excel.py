@@ -1,3 +1,8 @@
+"""
+Anything to do with excel
+"""
+
+
 def excel_column_index(col_name: str) -> int:
     """
     Returns the column index (starting with 1) given an excel column name (e.g. "AA")

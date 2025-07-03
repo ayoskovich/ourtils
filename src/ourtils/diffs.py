@@ -47,6 +47,9 @@ class DataFrameDiffer:
     Example:
         .. ipython:: python
 
+            import pandas as pd
+            from ourtils import diffs
+
             df1 = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
             df1
 

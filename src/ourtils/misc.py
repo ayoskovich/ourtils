@@ -1,16 +1,42 @@
-from contextlib import contextmanager
+"""
+Other misc items
+"""
+
+import os
+from pathlib import Path
+
+import pandas as pd
 
 
-@contextmanager
-def ExplainBlock(msg, width=50, char="*"):
-    msg = f" {msg} "
-    leftover_chars = width - len(msg)
-    left_chars = leftover_chars // 2
-    if max(left_chars, 0):
-        right_chars = leftover_chars - left_chars
-    else:
-        right_chars = 0
-    title_msg = f"{left_chars*char}{msg}{right_chars*char}"
-    print(title_msg)
-    yield
-    print(char * len(title_msg))
+def create_analysis_notes(filename: Path, df: pd.DataFrame) -> None:
+    """Creates a template markdown file to start making notes"""
+    notes = [
+        "# Analysis notes",
+        "",
+        "## Key Analysis Questions",
+        "",
+        "## Key Findings",
+        "",
+        "## Outstanding Questions",
+        "",
+        "## Dataset Info",
+        "",
+        f"Shape: {df.shape}",
+        "",
+        df.describe().to_markdown(),
+        "",
+        "## Columns",
+        "",
+    ]
+    for col in df.columns:
+        notes.append(f"- {col} ({df[col].dtype}): ")
+
+    notes += [
+        "",
+        "## Other Notes",
+        "",
+    ]
+    if os.path.exists(filename):
+        raise Exception(f"'{filename}' already exists!!")
+    with open(filename, "w") as f:
+        f.writelines("\n".join(notes))
